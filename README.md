@@ -47,7 +47,7 @@ curl "https://YOUR-PROJECT.vercel.app/api/movies/upcoming"
 curl "https://YOUR-PROJECT.vercel.app/api/movies/now-playing"
 ```
 
-When `TMDB_API_KEY` is configured, these use TMDB's popular, trending, discover, upcoming, and now-playing collections. Without the key, the six bundled historical sample movies are split into stable, non-overlapping demo collections; configure the key for live and date-accurate upcoming/now-playing results.
+When `TMDB_API_KEY` is configured, these use TMDB's popular, trending, discover, upcoming, and now-playing collections. Without the key, the six bundled historical sample movies are rotated across each section so every section has at least five movies; configure the key for live and date-accurate upcoming/now-playing results.
 
 ## Tests
 

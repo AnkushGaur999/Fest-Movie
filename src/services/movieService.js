@@ -185,15 +185,18 @@ const getLocalMovieCollection = async (type, { page = 1, limit = 10, genre = '' 
             .some((item) => String(item).toLowerCase() === String(genre).toLowerCase()))
         .sort((left, right) => Number(right.popularity || 0) - Number(left.popularity || 0));
 
-    // The bundled sample data is historical, so use stable demo buckets until TMDB is configured.
-    const bucketIndex = {
+    // The bundled sample data is small, so rotate it to keep every section populated.
+    const collectionOffset = {
         popular: 0,
         trending: 1,
         discover: 2,
         upcoming: 3,
         'now-playing': 4,
     }[type];
-    const bucketedMovies = bucketIndex === undefined ? movies : movies.filter((movie, index) => index % 5 === bucketIndex);
+    const offset = collectionOffset === undefined ? 0 : collectionOffset;
+    const bucketedMovies = movies.length === 0
+        ? []
+        : movies.map((_, index) => movies[(index + offset) % movies.length]).slice(0, Math.min(5, movies.length));
     const startIndex = (parsedPage - 1) * parsedLimit;
 
     return {

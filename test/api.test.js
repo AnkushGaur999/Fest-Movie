@@ -51,20 +51,14 @@ test('GET /api/movies/search finds matching results', async () => {
     assert.ok(body.data.length >= 1);
 });
 
-const collectionMovieIds = new Set();
-
 for (const type of ['popular', 'trending', 'discover', 'upcoming', 'now-playing']) {
     test(`GET /api/movies/${type} returns a movie collection`, async () => {
-        const response = await fetch(`${baseUrl}/api/movies/${type}?limit=2`);
+        const response = await fetch(`${baseUrl}/api/movies/${type}?limit=5`);
         assert.equal(response.status, 200);
         const body = await response.json();
         assert.equal(body.type, type);
         assert.ok(Array.isArray(body.data));
-        assert.ok(body.data.length <= 2);
-        for (const movie of body.data) {
-            assert.equal(collectionMovieIds.has(movie.id), false);
-            collectionMovieIds.add(movie.id);
-        }
+        assert.ok(body.data.length >= 5);
     });
 }
 
