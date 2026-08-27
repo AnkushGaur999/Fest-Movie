@@ -1,0 +1,25 @@
+{
+  "name": "fest-movie",
+  "version": "1.0.0",
+  "description": "Movie database REST API",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "movies",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  }
+}

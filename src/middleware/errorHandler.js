@@ -1,0 +1,30 @@
+import { AppError } from '../utils/AppError.js';
+
+export const notFoundHandler = (req, res, next) => {
+    next(new AppError(404, 'Route not found'));
+};
+
+export const errorHandler = (err, req, res, next) => {
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    const statusCode = err instanceof AppError ? err.statusCode : 500;
+    const message = err instanceof AppError ? err.message : 'Internal server error';
+    const details = err instanceof AppError ? err.details : null;
+
+    const response = {
+        success: false,
+        message,
+    };
+
+    if (details) {
+        response.details = details;
+    }
+
+    if (statusCode === 500) {
+        console.error(err);
+    }
+
+    res.status(statusCode).json(response);
+};
