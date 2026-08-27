@@ -27,6 +27,28 @@ curl "https://YOUR-PROJECT.vercel.app/api/movies?page=1&limit=2"
 curl "https://YOUR-PROJECT.vercel.app/api/movies/search?query=Fight%20Club"
 ```
 
+Movie collections are available at these endpoints:
+
+```text
+GET /api/movies/popular
+GET /api/movies/trending
+GET /api/movies/discover
+GET /api/movies/upcoming
+GET /api/movies/now-playing
+```
+
+They support the same `page`, `limit`, `sort`, and `genre` query parameters as `/api/movies`:
+
+```bash
+curl "https://YOUR-PROJECT.vercel.app/api/movies/popular?limit=10"
+curl "https://YOUR-PROJECT.vercel.app/api/movies/trending?page=1&limit=5"
+curl "https://YOUR-PROJECT.vercel.app/api/movies/discover?genre=Action"
+curl "https://YOUR-PROJECT.vercel.app/api/movies/upcoming"
+curl "https://YOUR-PROJECT.vercel.app/api/movies/now-playing"
+```
+
+When `TMDB_API_KEY` is configured, these use TMDB's popular, trending, discover, upcoming, and now-playing collections. Without the key, the six bundled historical sample movies are split into stable, non-overlapping demo collections; configure the key for live and date-accurate upcoming/now-playing results.
+
 ## Tests
 
 ```bash

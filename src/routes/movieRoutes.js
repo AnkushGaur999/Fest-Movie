@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     getAllMovies,
+    getMovieCollectionController,
     searchMoviesController,
     getMovieDetails,
     getMovieGenres,
@@ -15,6 +16,11 @@ router.get('/health', (req, res) => {
 
 router.get('/movies', validateMovieQuery, getAllMovies);
 router.get('/movies/search', validateMovieSearchQuery, searchMoviesController);
+router.get('/movies/popular', validateMovieQuery, getMovieCollectionController('popular'));
+router.get('/movies/trending', validateMovieQuery, getMovieCollectionController('trending'));
+router.get('/movies/discover', validateMovieQuery, getMovieCollectionController('discover'));
+router.get('/movies/upcoming', validateMovieQuery, getMovieCollectionController('upcoming'));
+router.get('/movies/now-playing', validateMovieQuery, getMovieCollectionController('now-playing'));
 router.get('/movies/:id', validateMovieId, getMovieDetails);
 router.get('/genres', getMovieGenres);
 router.get('/movies/categories', getMovieGenres);

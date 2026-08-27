@@ -132,8 +132,20 @@ export const getMovies = async ({ page = 1, limit = 10, sort = 'releaseDate', ge
     const total = filteredMovies.length;
 
     const sortedMovies = filteredMovies.sort((left, right) => {
-        const leftValue = sortConfig.field === 'rating' ? Number(left.rating) : sortConfig.field === 'title' ? left.title : new Date(left.releaseDate).getTime();
-        const rightValue = sortConfig.field === 'rating' ? Number(right.rating) : sortConfig.field === 'title' ? right.title : new Date(right.releaseDate).getTime();
+        const leftValue = sortConfig.field === 'rating'
+            ? Number(left.rating)
+            : sortConfig.field === 'popularity'
+                ? Number(left.popularity || 0)
+                : sortConfig.field === 'title'
+                    ? left.title
+                    : new Date(left.releaseDate).getTime();
+        const rightValue = sortConfig.field === 'rating'
+            ? Number(right.rating)
+            : sortConfig.field === 'popularity'
+                ? Number(right.popularity || 0)
+                : sortConfig.field === 'title'
+                    ? right.title
+                    : new Date(right.releaseDate).getTime();
 
         if (sortConfig.field === 'title') {
             return sortConfig.direction === 'asc'
@@ -154,6 +166,86 @@ export const getMovies = async ({ page = 1, limit = 10, sort = 'releaseDate', ge
         total,
         totalPages: total === 0 ? 0 : Math.ceil(total / parsedLimit),
     };
+};
+
+const collectionEndpoints = {
+    popular: '/movie/popular',
+    trending: '/trending/movie/week',
+    discover: '/discover/movie',
+    upcoming: '/movie/upcoming',
+    'now-playing': '/movie/now_playing',
+};
+
+const getLocalMovieCollection = async (type, { page = 1, limit = 10, genre = '' } = {}) => {
+    const parsedPage = Number(page) > 0 ? Number(page) : 1;
+    const parsedLimit = Number(limit) > 0 ? Number(limit) : 10;
+    const movies = movieData
+        .map(ensureMovieShape)
+        .filter((movie) => !genre || [...movie.categories, ...movie.genres]
+            .some((item) => String(item).toLowerCase() === String(genre).toLowerCase()))
+        .sort((left, right) => Number(right.popularity || 0) - Number(left.popularity || 0));
+
+    // The bundled sample data is historical, so use stable demo buckets until TMDB is configured.
+    const bucketIndex = {
+        popular: 0,
+        trending: 1,
+        discover: 2,
+        upcoming: 3,
+        'now-playing': 4,
+    }[type];
+    const bucketedMovies = bucketIndex === undefined ? movies : movies.filter((movie, index) => index % 5 === bucketIndex);
+    const startIndex = (parsedPage - 1) * parsedLimit;
+
+    return {
+        data: bucketedMovies.slice(startIndex, startIndex + parsedLimit),
+        page: parsedPage,
+        limit: parsedLimit,
+        total: bucketedMovies.length,
+        totalPages: bucketedMovies.length === 0 ? 0 : Math.ceil(bucketedMovies.length / parsedLimit),
+    };
+};
+
+export const getMovieCollection = async (type, { page = 1, limit = 10, sort, genre = '' } = {}) => {
+    const endpoint = collectionEndpoints[type];
+    if (!endpoint) return getMovies({ page, limit, sort, genre });
+
+    if (config.tmdbApiKey) {
+        try {
+            const response = await axios.get(`${config.tmdbBaseUrl}${endpoint}`, {
+                params: {
+                    api_key: config.tmdbApiKey,
+                    include_adult: false,
+                    page,
+                },
+            });
+            const movies = (response.data?.results || []).map((movie) => ({
+                id: movie.id,
+                title: movie.title,
+                description: movie.overview,
+                releaseDate: movie.release_date,
+                rating: movie.vote_average,
+                popularity: movie.popularity,
+                poster_path: movie.poster_path,
+                backdrop_path: movie.backdrop_path,
+                cast: ['TMDB Cast'],
+                genres: movie.genre_ids?.map((genreId) => genreLookup[genreId] || 'Drama') || ['Drama'],
+                categories: movie.genre_ids?.map((genreId) => genreLookup[genreId] || 'Drama') || ['Drama'],
+            })).map(ensureMovieShape);
+
+            const parsedLimit = Number(limit) > 0 ? Number(limit) : 10;
+            return {
+                data: movies.slice(0, parsedLimit),
+                page: Number(page) || 1,
+                limit: parsedLimit,
+                total: response.data?.total_results || movies.length,
+                totalPages: response.data?.total_pages || 0,
+            };
+        } catch (error) {
+            console.warn(`TMDB ${type} fetch failed, using fallback local dataset:`, error.message);
+        }
+    }
+
+    return getLocalMovieCollection(type, { page, limit, genre });
 };
 
 export const searchMovies = async ({ query = '', page = 1, limit = 10, sort = 'releaseDate' }) => {
