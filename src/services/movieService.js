@@ -251,18 +251,14 @@ export const getMovieCollection = async (type, { page = 1, limit = 10, sort, gen
     return getLocalMovieCollection(type, { page, limit, genre });
 };
 
-export const searchMovies = async ({ query = '', page = 1, limit = 10, sort = 'releaseDate' }) => {
-    if (!query || !String(query).trim()) {
-        return {
-            data: [],
-            page: Number(page) || 1,
-            limit: Number(limit) || 10,
-            total: 0,
-            totalPages: 0,
-        };
+export const searchMovies = async ({ query = '', page = 1, limit, sort = 'releaseDate' }) => {
+    const normalizedQuery = String(query ?? '').trim();
+
+    if (!normalizedQuery || normalizedQuery.toLowerCase() === 'null') {
+        return getMovies({ page, limit: limit ?? 50, sort });
     }
 
-    return getMovies({ page, limit, sort, query: String(query).trim() });
+    return getMovies({ page, limit, sort, query: normalizedQuery });
 };
 
 export const getMovieById = async (id) => {

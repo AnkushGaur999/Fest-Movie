@@ -23,11 +23,7 @@ export const validateMovieQuery = (req, res, next) => {
 };
 
 export const validateMovieSearchQuery = (req, res, next) => {
-    const { query, page, limit } = req.query;
-
-    if (!query || String(query).trim() === '') {
-        return next(new AppError(400, 'Query parameter "query" is required for search'));
-    }
+    const { page, limit } = req.query;
 
     if (page !== undefined && (!Number.isInteger(Number(page)) || Number(page) < 1)) {
         return next(new AppError(400, 'Query parameter "page" must be a positive integer'));

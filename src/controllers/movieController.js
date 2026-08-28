@@ -22,11 +22,6 @@ export const getAllMovies = async (req, res, next) => {
 export const searchMoviesController = async (req, res, next) => {
     try {
         const { query, page, limit, sort } = req.query;
-
-        if (!query || !String(query).trim()) {
-            throw new AppError(400, 'Search query is required');
-        }
-
         const result = await searchMovies({ query, page, limit, sort });
         res.status(200).json({
             success: true,

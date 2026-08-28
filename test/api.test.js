@@ -51,6 +51,36 @@ test('GET /api/movies/search finds matching results', async () => {
     assert.ok(body.data.length >= 1);
 });
 
+test('GET /api/movies/search without a query returns up to 50 movies', async () => {
+    const response = await fetch(`${baseUrl}/api/movies/search`);
+    assert.equal(response.status, 200);
+    const body = await response.json();
+    assert.equal(body.page, 1);
+    assert.equal(body.limit, 50);
+    assert.ok(body.total > 0);
+    assert.equal(body.data.length, Math.min(50, body.total));
+});
+
+test('GET /api/movies/search with a blank query returns a paginated list', async () => {
+    const response = await fetch(`${baseUrl}/api/movies/search?query=%20&page=1&limit=2`);
+    assert.equal(response.status, 200);
+    const body = await response.json();
+    assert.equal(body.page, 1);
+    assert.equal(body.limit, 2);
+    assert.ok(body.total > 0);
+    assert.equal(body.data.length, 2);
+});
+
+test('GET /api/movies/search with a null query returns a paginated list', async () => {
+    const response = await fetch(`${baseUrl}/api/movies/search?query=null&page=1&limit=2`);
+    assert.equal(response.status, 200);
+    const body = await response.json();
+    assert.equal(body.page, 1);
+    assert.equal(body.limit, 2);
+    assert.ok(body.total > 0);
+    assert.equal(body.data.length, 2);
+});
+
 for (const type of ['popular', 'trending', 'discover', 'upcoming', 'now-playing']) {
     test(`GET /api/movies/${type} returns a movie collection`, async () => {
         const response = await fetch(`${baseUrl}/api/movies/${type}?limit=5`);
