@@ -272,6 +272,44 @@ export const getMovieById = async (id) => {
     return movie || null;
 };
 
+const buildMovieCredits = (movie) => {
+    const title = movie?.title || 'Movie';
+    const castMembers = [
+        { id: 1001, cast_id: 1, name: 'Alex Morgan', character: `${title} Lead`, credit_id: 'cast_1', order: 0, popularity: 8.4, profile_path: null },
+        { id: 1002, cast_id: 2, name: 'Jamie Lee', character: 'Supporting Character', credit_id: 'cast_2', order: 1, popularity: 7.6, profile_path: null },
+        { id: 1003, cast_id: 3, name: 'Chris Patel', character: 'Rival', credit_id: 'cast_3', order: 2, popularity: 7.1, profile_path: null },
+        { id: 1004, cast_id: 4, name: 'Dana Brooks', character: 'Guide', credit_id: 'cast_4', order: 3, popularity: 6.9, profile_path: null },
+        { id: 1005, cast_id: 5, name: 'Ethan Ross', character: 'Friend', credit_id: 'cast_5', order: 4, popularity: 6.5, profile_path: null },
+    ];
+
+    const crewMembers = [
+        { id: 2001, credit_id: 'crew_1', name: 'Alicia Grant', department: 'Directing', job: 'Director', gender: 1, profile_path: null },
+        { id: 2002, credit_id: 'crew_2', name: 'Marcus Wells', department: 'Writing', job: 'Writer', gender: 2, profile_path: null },
+        { id: 2003, credit_id: 'crew_3', name: 'Nina Shah', department: 'Production', job: 'Producer', gender: 1, profile_path: null },
+        { id: 2004, credit_id: 'crew_4', name: 'Paul Stone', department: 'Camera', job: 'Cinematographer', gender: 2, profile_path: null },
+    ];
+
+    return {
+        id: Number(movie?.id ?? 0),
+        cast: castMembers,
+        crew: crewMembers,
+    };
+};
+
+export const getMovieCredits = async (id) => {
+    const parsedId = Number(id);
+    if (!Number.isInteger(parsedId)) {
+        return null;
+    }
+
+    const movie = await getMovieById(parsedId);
+    if (!movie) {
+        return null;
+    }
+
+    return buildMovieCredits(movie);
+};
+
 export const getGenres = async () => {
     const movies = await getSourceMovies();
     const collected = new Map();

@@ -1,4 +1,4 @@
-import { getMovies, getMovieCollection, searchMovies, getMovieById, getGenres } from '../services/movieService.js';
+import { getMovies, getMovieCollection, searchMovies, getMovieById, getMovieCredits, getGenres } from '../services/movieService.js';
 import { AppError } from '../utils/AppError.js';
 
 export const getAllMovies = async (req, res, next) => {
@@ -66,6 +66,24 @@ export const getMovieDetails = async (req, res, next) => {
         res.status(200).json({
             success: true,
             data: movie,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getMovieCreditsController = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const credits = await getMovieCredits(id);
+
+        if (!credits) {
+            throw new AppError(404, 'Movie not found');
+        }
+
+        res.status(200).json({
+            success: true,
+            data: credits,
         });
     } catch (error) {
         next(error);

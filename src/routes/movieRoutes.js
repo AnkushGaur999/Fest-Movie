@@ -4,6 +4,7 @@ import {
     getMovieCollectionController,
     searchMoviesController,
     getMovieDetails,
+    getMovieCreditsController,
     getMovieGenres,
 } from '../controllers/movieController.js';
 import { validateMovieQuery, validateMovieSearchQuery, validateMovieId } from '../middleware/validation.js';
@@ -22,6 +23,7 @@ router.get('/movies/discover', validateMovieQuery, getMovieCollectionController(
 router.get('/movies/upcoming', validateMovieQuery, getMovieCollectionController('upcoming'));
 router.get('/movies/now-playing', validateMovieQuery, getMovieCollectionController('now-playing'));
 router.get('/movies/:id', validateMovieId, getMovieDetails);
+router.get('/movies/:id/credits', validateMovieId, getMovieCreditsController);
 router.get('/genres', getMovieGenres);
 router.get('/movies/categories', getMovieGenres);
 

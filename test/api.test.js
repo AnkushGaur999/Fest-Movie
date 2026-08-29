@@ -99,6 +99,17 @@ test('GET /api/movies/:id returns a movie', async () => {
     assert.equal(body.data.id, 550);
 });
 
+test('GET /api/movies/:id/credits returns cast and crew', async () => {
+    const response = await fetch(`${baseUrl}/api/movies/550/credits`);
+    assert.equal(response.status, 200);
+    const body = await response.json();
+    assert.equal(body.success, true);
+    assert.equal(body.data.id, 550);
+    assert.ok(Array.isArray(body.data.cast));
+    assert.ok(body.data.cast.length > 0);
+    assert.ok(Array.isArray(body.data.crew));
+});
+
 test('GET /api/movies/:id missing returns 404', async () => {
     const response = await fetch(`${baseUrl}/api/movies/999999`);
     assert.equal(response.status, 404);
