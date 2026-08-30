@@ -119,9 +119,11 @@ test('GET /api/movies/:id/credits rejects fake default profile URLs', async () =
     assert.equal(body.success, true);
     assert.ok(Array.isArray(body.data.cast));
     assert.ok(body.data.cast.every((member) => member.profile_path && /^https?:\/\//.test(member.profile_path) && !member.profile_path.includes('default-cast-')));
+    assert.ok(body.data.cast.every((member) => !member.profile_path.includes('images.unsplash.com')));
     assert.ok(new Set(body.data.cast.map((member) => member.profile_path)).size === body.data.cast.length);
     assert.ok(Array.isArray(body.data.crew));
     assert.ok(body.data.crew.every((member) => member.profile_path && /^https?:\/\//.test(member.profile_path) && !member.profile_path.includes('default-crew-')));
+    assert.ok(body.data.crew.every((member) => !member.profile_path.includes('images.unsplash.com')));
     assert.ok(new Set(body.data.crew.map((member) => member.profile_path)).size === body.data.crew.length);
 });
 
