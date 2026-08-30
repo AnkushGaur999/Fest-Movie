@@ -99,7 +99,7 @@ test('GET /api/movies/:id returns a movie', async () => {
     assert.equal(body.data.id, 550);
 });
 
-test('GET /api/movies/:id/credits returns cast and crew', async () => {
+test('GET /api/movies/:id/credits returns cast and crew with photo URLs', async () => {
     const response = await fetch(`${baseUrl}/api/movies/550/credits`);
     assert.equal(response.status, 200);
     const body = await response.json();
@@ -108,6 +108,8 @@ test('GET /api/movies/:id/credits returns cast and crew', async () => {
     assert.ok(Array.isArray(body.data.cast));
     assert.ok(body.data.cast.length > 0);
     assert.ok(Array.isArray(body.data.crew));
+    assert.ok(body.data.cast.some((member) => member.profile_path && member.profile_path.startsWith('https://image.tmdb.org/t/p/original/')));
+    assert.ok(body.data.crew.some((member) => member.profile_path && member.profile_path.startsWith('https://image.tmdb.org/t/p/original/')));
 });
 
 test('GET /api/movies/:id missing returns 404', async () => {
