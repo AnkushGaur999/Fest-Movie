@@ -35,6 +35,10 @@ const toGenreNameList = (genres) => {
 const toOriginalImageUrl = (value) => {
     if (!value) return '';
 
+    if (String(value).includes('default-cast-') || String(value).includes('default-crew-') || String(value).includes('placeholder-profile')) {
+        return 'https://image.tmdb.org/t/p/original/placeholder-profile.jpg';
+    }
+
     if (value.startsWith('http')) {
         return value.replace('/w500/', '/original/').replace('/w300/', '/original/').replace('/w780/', '/original/');
     }
@@ -43,9 +47,36 @@ const toOriginalImageUrl = (value) => {
     return `https://image.tmdb.org/t/p/original${normalized}`;
 };
 
-const getProfileImageUrl = (path) => {
+const getFallbackProfileUrl = (type, movieId, index) => {
+    const portraitMap = {
+        cast: [
+            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=800&q=80',
+        ],
+        crew: [
+            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=800&q=80',
+            'https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=800&q=80',
+        ],
+    };
+
+    const pool = portraitMap[type] || portraitMap.cast;
+    return pool[(Number(movieId) + Number(index)) % pool.length];
+};
+
+const getProfileImageUrl = (path, fallbackType = 'cast', fallbackMovieId = 0, fallbackIndex = 0) => {
     if (!path) {
-        return 'https://image.tmdb.org/t/p/original/placeholder-profile.jpg';
+        return getFallbackProfileUrl(fallbackType, fallbackMovieId, fallbackIndex);
+    }
+
+    const normalized = String(path).trim();
+    if (normalized.includes('default-cast-') || normalized.includes('default-crew-') || normalized.includes('placeholder-profile')) {
+        return getFallbackProfileUrl(fallbackType, fallbackMovieId, fallbackIndex);
     }
 
     return toOriginalImageUrl(path);
@@ -229,14 +260,14 @@ const buildFallbackCredits = (movieId, title) => {
 
     return {
         cast: [
-            { id: movieId + 1, cast_id: 1, name: `${leadName} Lead`, character: 'Lead Role', credit_id: `cast_${movieId}_1`, order: 0, popularity: 8.5, profile_path: '/default-cast-1.jpg' },
-            { id: movieId + 2, cast_id: 2, name: `${leadName} Supporting`, character: 'Supporting Role', credit_id: `cast_${movieId}_2`, order: 1, popularity: 8.1, profile_path: '/default-cast-2.jpg' },
-            { id: movieId + 3, cast_id: 3, name: `${leadName} Featured`, character: 'Feature Role', credit_id: `cast_${movieId}_3`, order: 2, popularity: 7.7, profile_path: '/default-cast-3.jpg' },
+            { id: movieId + 1, cast_id: 1, name: `${leadName} Lead`, character: 'Lead Role', credit_id: `cast_${movieId}_1`, order: 0, popularity: 8.5, profile_path: getFallbackProfileUrl('cast', movieId, 1) },
+            { id: movieId + 2, cast_id: 2, name: `${leadName} Supporting`, character: 'Supporting Role', credit_id: `cast_${movieId}_2`, order: 1, popularity: 8.1, profile_path: getFallbackProfileUrl('cast', movieId, 2) },
+            { id: movieId + 3, cast_id: 3, name: `${leadName} Featured`, character: 'Feature Role', credit_id: `cast_${movieId}_3`, order: 2, popularity: 7.7, profile_path: getFallbackProfileUrl('cast', movieId, 3) },
         ],
         crew: [
-            { id: movieId + 1001, credit_id: `crew_${movieId}_1`, name: `${leadName} Director`, department: 'Directing', job: 'Director', gender: 2, profile_path: '/default-crew-1.jpg' },
-            { id: movieId + 1002, credit_id: `crew_${movieId}_2`, name: `${leadName} Writer`, department: 'Writing', job: 'Writer', gender: 2, profile_path: '/default-crew-2.jpg' },
-            { id: movieId + 1003, credit_id: `crew_${movieId}_3`, name: `${leadName} Producer`, department: 'Production', job: 'Producer', gender: 1, profile_path: '/default-crew-3.jpg' },
+            { id: movieId + 1001, credit_id: `crew_${movieId}_1`, name: `${leadName} Director`, department: 'Directing', job: 'Director', gender: 2, profile_path: getFallbackProfileUrl('crew', movieId, 1) },
+            { id: movieId + 1002, credit_id: `crew_${movieId}_2`, name: `${leadName} Writer`, department: 'Writing', job: 'Writer', gender: 2, profile_path: getFallbackProfileUrl('crew', movieId, 2) },
+            { id: movieId + 1003, credit_id: `crew_${movieId}_3`, name: `${leadName} Producer`, department: 'Production', job: 'Producer', gender: 1, profile_path: getFallbackProfileUrl('crew', movieId, 3) },
         ],
     };
 };
@@ -326,7 +357,7 @@ const ensureMovieShape = (movie) => {
                 credit_id: person.credit_id || `cast_${movie.id}_${index + 1}`,
                 order: typeof person.order === 'number' ? person.order : index,
                 popularity: person.popularity ?? 0,
-                profile_path: getProfileImageUrl(person.profile_path),
+                profile_path: getProfileImageUrl(person.profile_path, 'cast', Number(movie.id), index + 1),
             })),
             crew: (credits.crew || []).map((person, index) => ({
                 id: person.id ?? index + 101,
@@ -335,7 +366,7 @@ const ensureMovieShape = (movie) => {
                 department: person.department || 'Production',
                 job: person.job || 'Crew',
                 gender: person.gender ?? 2,
-                profile_path: getProfileImageUrl(person.profile_path),
+                profile_path: getProfileImageUrl(person.profile_path, 'crew', Number(movie.id), index + 1),
             })),
         },
     };
@@ -522,7 +553,7 @@ const buildMovieCredits = (movie) => {
         credit_id: person.credit_id || `cast_${movie?.id ?? index}_${index + 1}`,
         order: typeof person.order === 'number' ? person.order : index,
         popularity: person.popularity ?? 0,
-        profile_path: getProfileImageUrl(person.profile_path),
+        profile_path: getProfileImageUrl(person.profile_path, 'cast', Number(movie?.id ?? index), index + 1),
     }));
 
     const crewMembers = (movieCredits.crew || []).map((person, index) => ({
@@ -532,7 +563,7 @@ const buildMovieCredits = (movie) => {
         department: person.department || 'Production',
         job: person.job || 'Crew',
         gender: person.gender ?? 2,
-        profile_path: getProfileImageUrl(person.profile_path),
+        profile_path: getProfileImageUrl(person.profile_path, 'crew', Number(movie?.id ?? index), index + 1),
     }));
 
     return {
