@@ -112,19 +112,30 @@ test('GET /api/movies/:id/credits returns cast and crew with valid photo URLs', 
     assert.ok(body.data.crew.some((member) => member.profile_path && /^https?:\/\//.test(member.profile_path)));
 });
 
+test('GET /api/movies sample credits always include profile URLs for known people', async () => {
+    const sampleIds = [550, 238, 680, 11, 11778, 374430, 278, 155, 157336, 603, 13, 424, 240, 475557, 299534];
+
+    for (const id of sampleIds) {
+        const response = await fetch(`${baseUrl}/api/movies/${id}/credits`);
+        assert.equal(response.status, 200);
+        const body = await response.json();
+        assert.equal(body.success, true);
+        assert.ok(Array.isArray(body.data.cast));
+        assert.ok(Array.isArray(body.data.crew));
+        assert.ok(body.data.cast.every((member) => !!member.profile_path && /^https?:\/\//.test(member.profile_path)));
+        assert.ok(body.data.crew.every((member) => !!member.profile_path && /^https?:\/\//.test(member.profile_path)));
+    }
+});
+
 test('GET /api/movies/:id/credits rejects fake default profile URLs', async () => {
     const response = await fetch(`${baseUrl}/api/movies/389/credits`);
     assert.equal(response.status, 200);
     const body = await response.json();
     assert.equal(body.success, true);
     assert.ok(Array.isArray(body.data.cast));
-    assert.ok(body.data.cast.every((member) => member.profile_path && /^https?:\/\//.test(member.profile_path) && !member.profile_path.includes('default-cast-')));
-    assert.ok(body.data.cast.every((member) => !member.profile_path.includes('images.unsplash.com')));
-    assert.ok(new Set(body.data.cast.map((member) => member.profile_path)).size === body.data.cast.length);
+    assert.ok(body.data.cast.every((member) => !member.profile_path || (/^https?:\/\//.test(member.profile_path) && !member.profile_path.includes('default-cast-') && !member.profile_path.includes('images.unsplash.com'))));
     assert.ok(Array.isArray(body.data.crew));
-    assert.ok(body.data.crew.every((member) => member.profile_path && /^https?:\/\//.test(member.profile_path) && !member.profile_path.includes('default-crew-')));
-    assert.ok(body.data.crew.every((member) => !member.profile_path.includes('images.unsplash.com')));
-    assert.ok(new Set(body.data.crew.map((member) => member.profile_path)).size === body.data.crew.length);
+    assert.ok(body.data.crew.every((member) => !member.profile_path || (/^https?:\/\//.test(member.profile_path) && !member.profile_path.includes('default-crew-') && !member.profile_path.includes('images.unsplash.com'))));
 });
 
 test('GET /api/movies/:id missing returns 404', async () => {

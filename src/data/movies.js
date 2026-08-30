@@ -21,8 +21,8 @@ const genreMap = {
 };
 
 export const movieData = [
-  //1
-    {
+  // 1
+  {
     adult: false,
     backdrop_path: 'https://image.tmdb.org/t/p/w500/8uO0gUM8aNqYLs1OsTBQiXu0fEv.jpg',
     genre_ids: [18],
@@ -41,9 +41,10 @@ export const movieData = [
     vote_count: 26280,
     categories: ['Drama'],
     genres: ['Drama'],
+    trailer_url: 'https://www.youtube.com/watch?v=qtRKdVHc-cE',
   },
   
-  //2
+  // 2
   {
     adult: false,
     backdrop_path: 'https://image.tmdb.org/t/p/w500/tmU7GeKVybMWFButWEGl2M4GeiP.jpg',
@@ -63,9 +64,10 @@ export const movieData = [
     vote_count: 20470,
     categories: ['Drama', 'Crime'],
     genres: ['Drama', 'Crime'],
+    trailer_url: 'https://www.youtube.com/watch?v=sY1S34973zA',
   },
 
-  //3
+  // 3
   {
     adult: false,
     backdrop_path: 'https://image.tmdb.org/t/p/w500/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg',
@@ -85,6 +87,7 @@ export const movieData = [
     vote_count: 27500,
     categories: ['Thriller', 'Crime'],
     genres: ['Thriller', 'Crime'],
+    trailer_url: 'https://www.youtube.com/watch?v=s7EdQ4FqbhY',
   },
   
   // 4
@@ -107,6 +110,7 @@ export const movieData = [
     vote_count: 20500,
     categories: ['Adventure', 'Action', 'Sci-Fi'],
     genres: ['Adventure', 'Action', 'Sci-Fi'],
+    trailer_url: 'https://www.youtube.com/watch?v=vZ734NWnAHA',
   },
 
   // 5
@@ -129,6 +133,7 @@ export const movieData = [
     vote_count: 2938,
     categories: ['Drama', 'War'],
     genres: ['Drama', 'War'],
+    trailer_url: 'https://www.youtube.com/watch?v=vw-Ty6G13ic',
   },
 
   // 6
@@ -151,6 +156,7 @@ export const movieData = [
     vote_count: 78,
     categories: ['Drama', 'Horror', 'Mystery', 'Sci-Fi', 'Thriller', 'TV Movie'],
     genres: ['Drama', 'Horror', 'Mystery', 'Sci-Fi', 'Thriller', 'TV Movie'],
+    trailer_url: 'https://www.youtube.com/watch?v=3S3InO9fyoE',
   },
 
   // 7
@@ -173,6 +179,7 @@ export const movieData = [
     vote_count: 27000,
     categories: ['Drama', 'Crime'],
     genres: ['Drama', 'Crime'],
+    trailer_url: 'https://www.youtube.com/watch?v=PLl99DlL6b4',
   },
 
   // 8
@@ -195,6 +202,7 @@ export const movieData = [
     vote_count: 33000,
     categories: ['Drama', 'Action', 'Crime', 'Thriller'],
     genres: ['Drama', 'Action', 'Crime', 'Thriller'],
+    trailer_url: 'https://www.youtube.com/watch?v=EXeTwQWrcwY',
   },
 
   // 9
@@ -217,6 +225,7 @@ export const movieData = [
     vote_count: 35000,
     categories: ['Adventure', 'Drama', 'Sci-Fi'],
     genres: ['Adventure', 'Drama', 'Sci-Fi'],
+    trailer_url: 'https://www.youtube.com/watch?v=zSWdZVtXT7E',
   },
 
   // 10
@@ -239,6 +248,7 @@ export const movieData = [
     vote_count: 26000,
     categories: ['Action', 'Sci-Fi'],
     genres: ['Action', 'Sci-Fi'],
+    trailer_url: 'https://www.youtube.com/watch?v=vKQi3bBA1y8',
   },
 
   // 11
@@ -261,6 +271,7 @@ export const movieData = [
     vote_count: 27000,
     categories: ['Comedy', 'Drama', 'Romance'],
     genres: ['Comedy', 'Drama', 'Romance'],
+    trailer_url: 'https://www.youtube.com/watch?v=bLvqoHBptjg',
   },
 
   // 12
@@ -283,6 +294,7 @@ export const movieData = [
     vote_count: 16000,
     categories: ['Drama', 'History', 'War'],
     genres: ['Drama', 'History', 'War'],
+    trailer_url: 'https://www.youtube.com/watch?v=gG22XNhtnoY',
   },
 
   // 13
@@ -305,6 +317,7 @@ export const movieData = [
     vote_count: 12500,
     categories: ['Drama', 'Crime'],
     genres: ['Drama', 'Crime'],
+    trailer_url: 'https://www.youtube.com/watch?v=9O1Iy9od7-A',
   },
 
   // 14
@@ -327,6 +340,7 @@ export const movieData = [
     vote_count: 8500,
     categories: ['Drama'],
     genres: ['Drama'],
+    trailer_url: 'https://www.youtube.com/watch?v=_13J_9B5jEk',
   },
 
   // 15
@@ -349,6 +363,7 @@ export const movieData = [
     vote_count: 4500,
     categories: ['Drama', 'Romance'],
     genres: ['Drama', 'Romance'],
+    trailer_url: 'https://www.youtube.com/watch?v=C2-GX0yJ2qE',
   },
 
   // 16
@@ -371,6 +386,7 @@ export const movieData = [
     vote_count: 13000,
     categories: ['Drama', 'Crime'],
     genres: ['Drama', 'Crime'],
+    trailer_url: 'https://www.youtube.com/watch?v=2ilzidi_J8s',
   },
 
   // 17
@@ -393,6 +409,7 @@ export const movieData = [
     vote_count: 17000,
     categories: ['Drama', 'Crime', 'Fantasy'],
     genres: ['Drama', 'Crime', 'Fantasy'],
+    trailer_url: 'https://www.youtube.com/watch?v=Ki4haFrqSrw',
   },
 
   // 18
@@ -415,6 +432,7 @@ export const movieData = [
     vote_count: 7500,
     categories: ['Drama', 'Crime'],
     genres: ['Drama', 'Crime'],
+    trailer_url: 'https://www.youtube.com/watch?v=dcUOO4Itksg',
   },
 
   // 19
@@ -437,6 +455,7 @@ export const movieData = [
     vote_count: 37000,
     categories: ['Action', 'Sci-Fi', 'Adventure'],
     genres: ['Action', 'Sci-Fi', 'Adventure'],
+    trailer_url: 'https://www.youtube.com/watch?v=YoHD9XEInc0',
   },
 
   // 20
@@ -459,6 +478,7 @@ export const movieData = [
     vote_count: 10500,
     categories: ['Drama', 'Crime', 'Thriller'],
     genres: ['Drama', 'Crime', 'Thriller'],
+    trailer_url: 'https://www.youtube.com/watch?v=oiXdPolca5w',
   },
 
   // 21
@@ -481,6 +501,7 @@ export const movieData = [
     vote_count: 11000,
     categories: ['Drama'],
     genres: ['Drama'],
+    trailer_url: 'https://www.youtube.com/watch?v=4lj185DaZ_o',
   },
 
   // 22
@@ -503,6 +524,7 @@ export const movieData = [
     vote_count: 5000,
     categories: ['Drama', 'Romance'],
     genres: ['Drama', 'Romance'],
+    trailer_url: 'https://www.youtube.com/watch?v=BkL9l7qovsE',
   },
 
   // 23
@@ -525,6 +547,7 @@ export const movieData = [
     vote_count: 25000,
     categories: ['Adventure', 'Fantasy', 'Action'],
     genres: ['Adventure', 'Fantasy', 'Action'],
+    trailer_url: 'https://www.youtube.com/watch?v=V75dMMIW2B4',
   },
 
   // 24
@@ -547,6 +570,7 @@ export const movieData = [
     vote_count: 22000,
     categories: ['Adventure', 'Fantasy', 'Action'],
     genres: ['Adventure', 'Fantasy', 'Action'],
+    trailer_url: 'https://www.youtube.com/watch?v=LbfMDwc4yGo',
   },
 
   // 25
@@ -569,6 +593,7 @@ export const movieData = [
     vote_count: 24000,
     categories: ['Adventure', 'Fantasy', 'Action'],
     genres: ['Adventure', 'Fantasy', 'Action'],
+    trailer_url: 'https://www.youtube.com/watch?v=r5X-hFf6Bwo',
   },
 
   // 26
@@ -591,6 +616,7 @@ export const movieData = [
     vote_count: 14000,
     categories: ['Action', 'Crime', 'Drama'],
     genres: ['Action', 'Crime', 'Drama'],
+    trailer_url: 'https://www.youtube.com/watch?v=aNQqoExfQsg',
   },
 
   // 27
@@ -613,6 +639,7 @@ export const movieData = [
     vote_count: 19000,
     categories: ['Action', 'Crime', 'Drama'],
     genres: ['Action', 'Crime', 'Drama'],
+    trailer_url: 'https://www.youtube.com/watch?v=neY2x64E25U',
   },
 
   // 28
@@ -635,6 +662,7 @@ export const movieData = [
     vote_count: 10000,
     categories: ['Sci-Fi', 'Adventure', 'Action'],
     genres: ['Sci-Fi', 'Adventure', 'Action'],
+    trailer_url: 'https://www.youtube.com/watch?v=iGAHnZ555n8',
   },
 
   // 29
@@ -657,6 +685,7 @@ export const movieData = [
     vote_count: 14000,
     categories: ['Crime', 'Thriller'],
     genres: ['Crime', 'Thriller'],
+    trailer_url: 'https://www.youtube.com/watch?v=vayksn444Q8',
   },
 
   // 30
@@ -679,6 +708,7 @@ export const movieData = [
     vote_count: 26000,
     categories: ['Crime', 'Drama', 'Thriller'],
     genres: ['Crime', 'Drama', 'Thriller'],
+    trailer_url: 'https://www.youtube.com/watch?v=zAGVQLHvwOY',
   },
 
   // 31
@@ -701,6 +731,7 @@ export const movieData = [
     vote_count: 22000,
     categories: ['Crime', 'Mystery', 'Thriller'],
     genres: ['Crime', 'Mystery', 'Thriller'],
+    trailer_url: 'https://www.youtube.com/watch?v=znmZoVkCjpI',
   },
 
   // 32
@@ -723,6 +754,7 @@ export const movieData = [
     vote_count: 11000,
     categories: ['Drama', 'Crime'],
     genres: ['Drama', 'Crime'],
+    trailer_url: 'https://www.youtube.com/watch?v=XfQYHqsiN5g',
   },
 
   // 33
@@ -745,6 +777,7 @@ export const movieData = [
     vote_count: 25000,
     categories: ['Crime', 'Drama', 'Comedy'],
     genres: ['Crime', 'Drama', 'Comedy'],
+    trailer_url: 'https://www.youtube.com/watch?v=iszwuX1AK6A',
   },
 
   // 34
@@ -767,6 +800,7 @@ export const movieData = [
     vote_count: 24000,
     categories: ['Drama', 'Mystery', 'Thriller'],
     genres: ['Drama', 'Mystery', 'Thriller'],
+    trailer_url: 'https://www.youtube.com/watch?v=5iaYLCiq5A8',
   },
 
   // 35
@@ -789,6 +823,7 @@ export const movieData = [
     vote_count: 15000,
     categories: ['Mystery', 'Thriller', 'Drama'],
     genres: ['Mystery', 'Thriller', 'Drama'],
+    trailer_url: 'https://www.youtube.com/watch?v=4CV41hahS8s',
   },
 
   // 36
@@ -811,6 +846,7 @@ export const movieData = [
     vote_count: 4400,
     categories: ['Comedy', 'Drama', 'Romance'],
     genres: ['Comedy', 'Drama', 'Romance'],
+    trailer_url: 'https://www.youtube.com/watch?v=c25GKl5VFrY',
   },
 
   // 37
@@ -833,6 +869,7 @@ export const movieData = [
     vote_count: 11000,
     categories: ['Animation', 'Drama', 'Romance'],
     genres: ['Animation', 'Drama', 'Romance'],
+    trailer_url: 'https://www.youtube.com/watch?v=xU47nhruN-Q',
   },
 
   // 38
@@ -855,6 +892,7 @@ export const movieData = [
     vote_count: 16500,
     categories: ['Animation', 'Fantasy', 'Family'],
     genres: ['Animation', 'Fantasy', 'Family'],
+    trailer_url: 'https://www.youtube.com/watch?v=ByXuk9QqQkk',
   },
 
   // 39
@@ -877,6 +915,7 @@ export const movieData = [
     vote_count: 18000,
     categories: ['Animation', 'Comedy', 'Family'],
     genres: ['Animation', 'Comedy', 'Family'],
+    trailer_url: 'https://www.youtube.com/watch?v=v-PjgYDrg70',
   },
 
   // 40
@@ -899,6 +938,7 @@ export const movieData = [
     vote_count: 13500,
     categories: ['Animation', 'Family', 'Adventure'],
     genres: ['Animation', 'Family', 'Adventure'],
+    trailer_url: 'https://www.youtube.com/watch?v=oKiYuIsPxYk',
   },
 
   // 41
@@ -921,6 +961,7 @@ export const movieData = [
     vote_count: 7000,
     categories: ['Animation', 'Comedy', 'Action'],
     genres: ['Animation', 'Comedy', 'Action'],
+    trailer_url: 'https://www.youtube.com/watch?v=rGQUKzSDhrg',
   },
 
   // 42
@@ -943,6 +984,7 @@ export const movieData = [
     vote_count: 27000,
     categories: ['Fantasy', 'Adventure', 'Family'],
     genres: ['Fantasy', 'Adventure', 'Family'],
+    trailer_url: 'https://www.youtube.com/watch?v=VyHV0BRtdxo',
   },
 
   // 43
@@ -965,6 +1007,7 @@ export const movieData = [
     vote_count: 29000,
     categories: ['Action', 'Adventure', 'Sci-Fi'],
     genres: ['Action', 'Adventure', 'Sci-Fi'],
+    trailer_url: 'https://www.youtube.com/watch?v=6ZfuNTqbHE8',
   },
 
   // 44
@@ -987,6 +1030,7 @@ export const movieData = [
     vote_count: 32000,
     categories: ['Action', 'Adventure', 'Sci-Fi'],
     genres: ['Action', 'Adventure', 'Sci-Fi'],
+    trailer_url: 'https://www.youtube.com/watch?v=TcMBFSGVi1c',
   },
 
   // 45
@@ -1009,6 +1053,7 @@ export const movieData = [
     vote_count: 20000,
     categories: ['Action', 'Adventure', 'Sci-Fi'],
     genres: ['Action', 'Adventure', 'Sci-Fi'],
+    trailer_url: 'https://www.youtube.com/watch?v=JfVOs4VSpmA',
   },
 
   // 46
@@ -1031,7 +1076,8 @@ export const movieData = [
     vote_count: 15000,
     categories: ['Action', 'Adventure', 'Sci-Fi'],
     genres: ['Action', 'Adventure', 'Sci-Fi'],
+    trailer_url: 'https://www.youtube.com/watch?v=Z1BCujX3pw8',
   }
-  ];
+];
 
 export const genreLookup = genreMap;
